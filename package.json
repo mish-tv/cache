@@ -1,6 +1,6 @@
 {
   "name": "@mish/cache",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A simple cache library with support for exclusion control.",
   "main": "lib/cjs/index.js",
   "module": "lib/esm/index.js",
