@@ -1,0 +1,85 @@
+{
+  "env": { "browser": true, "node": true, "es6": true },
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "import",
+    "eslint-plugin-import-helpers",
+    "react"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true }
+  },
+  "settings": {
+    "react": { "pragma": "React", "version": "17.0" }
+  },
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "import/no-self-import": "error",
+    "import/no-cycle": "error",
+    "import/no-useless-path-segments": "error",
+    "import/no-relative-parent-imports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import-helpers/order-imports": ["error", {
+      "groups": [
+        "module",
+        [
+          "/@mish/universal-settings/",
+          "/@mish/utilities/",
+          "/@mish/locales/",
+          "/@mish/datastore/",
+          "/@mish/rpc-core/",
+          "/@mish/rpc-server/",
+          "/@mish/rpc-client/",
+          "/@mish/rpc-deploy/",
+          "/@mish/models/",
+          "/@mish/schemas-rpc/"
+        ],
+        [
+          "/@server/datastore-manipulators/",
+          "/@server/shared/",
+          "/@server/plugins/",
+          "/@server/procedures/",
+          "/@server/scripts/"
+        ],
+        [
+          "/@web/platform/",
+          "/@web/schemas/",
+          "/@web/next-config/",
+          "/@web/stores/",
+          "/@web/components/"
+        ],
+        "/^@packages/",
+        "/^@requests/",
+        "/^@stores/",
+        ["parent", "index", "sibling"]
+      ],
+      "newlinesBetween": "always"
+    }],
+    "max-len": ["error", { "code": 128 }],
+    "react/button-has-type": "error",
+    "react/display-name": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-curly-brace-presence": ["error", "never"],
+    "arrow-body-style": ["error", "as-needed"],
+    "sort-imports": ["error", {
+      "ignoreCase": true,
+      "ignoreDeclarationSort": true
+    }],
+    "no-duplicate-imports": "error",
+    "no-throw-literal": "error",
+    "newline-before-return": "error",
+    "no-return-await": "error"
+  }
+}

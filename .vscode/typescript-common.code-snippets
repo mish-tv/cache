@@ -1,0 +1,32 @@
+{
+  "Export": {
+    "prefix": "export statement",
+    "scope": "typescript,typescriptreact",
+    "body": ["export { $2 } from \"${1:module}\";"]
+  },
+  "Import modules from @packages": {
+    "prefix": "import packages",
+    "scope": "typescript,typescriptreact",
+    "body": ["import { $2 } from \"@packages/${1:index}\";"]
+  },
+  "Import modules from @stores": {
+    "prefix": "import stores",
+    "scope": "typescript,typescriptreact",
+    "body": ["import { $2 } from \"@stores/${1:index}\";"]
+  },
+  "Import modules from @requests": {
+    "prefix": "import requests",
+    "scope": "typescript,typescriptreact",
+    "body": ["import { $2 } from \"@requests/${1:index}\";"]
+  },
+  "Import modules from @components": {
+    "prefix": "import components",
+    "scope": "typescript,typescriptreact",
+    "body": ["import { $2 } from \"@components/${1:index}\";"]
+  },
+  "Import modules from @layouts": {
+    "prefix": "import layouts",
+    "scope": "typescript,typescriptreact",
+    "body": ["import { $2 } from \"@layouts/${1:index}\";"]
+  }
+}
