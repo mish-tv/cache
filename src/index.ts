@@ -14,10 +14,10 @@ export class Cache<T> {
    * @param ttl The duration from when the value to be cached is retrieved until it expires.
    *
    * @param jitter The actual ttl of cache is the ttl passed in the argument plus a random value whose minimum value is 0 and
-   * maximum value is jitter. The default value is `ttl / 60`.
+   * maximum value is jitter. The default value is `ttl / 10`.
    */
   constructor(ttl = 3600000, jitter?: number) {
-    this.#ttl = ttl + Math.random() * (jitter ?? ttl / 60);
+    this.#ttl = ttl + Math.random() * (jitter ?? ttl / 10);
     this.#expiresAt = createExpiresAt(this.#ttl);
   }
 

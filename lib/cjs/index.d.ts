@@ -4,7 +4,7 @@ export declare class Cache<T> {
      * @param ttl The duration from when the value to be cached is retrieved until it expires.
      *
      * @param jitter The actual ttl of cache is the ttl passed in the argument plus a random value whose minimum value is 0 and
-     * maximum value is jitter. The default value is `ttl / 60`.
+     * maximum value is jitter. The default value is `ttl / 10`.
      */
     constructor(ttl?: number, jitter?: number);
     get isExpired(): boolean;
