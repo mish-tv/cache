@@ -31,42 +31,6 @@
     "import/no-relative-parent-imports": "error",
     "import/first": "error",
     "import/newline-after-import": "error",
-    "import-helpers/order-imports": ["error", {
-      "groups": [
-        "module",
-        [
-          "/@mish/universal-settings/",
-          "/@mish/utilities/",
-          "/@mish/locales/",
-          "/@mish/datastore/",
-          "/@mish/rpc-core/",
-          "/@mish/rpc-server/",
-          "/@mish/rpc-client/",
-          "/@mish/rpc-deploy/",
-          "/@mish/models/",
-          "/@mish/schemas-rpc/"
-        ],
-        [
-          "/@server/datastore-manipulators/",
-          "/@server/shared/",
-          "/@server/plugins/",
-          "/@server/procedures/",
-          "/@server/scripts/"
-        ],
-        [
-          "/@web/platform/",
-          "/@web/schemas/",
-          "/@web/next-config/",
-          "/@web/stores/",
-          "/@web/components/"
-        ],
-        "/^@packages/",
-        "/^@requests/",
-        "/^@stores/",
-        ["parent", "index", "sibling"]
-      ],
-      "newlinesBetween": "always"
-    }],
     "max-len": ["error", { "code": 128 }],
     "react/button-has-type": "error",
     "react/display-name": "off",

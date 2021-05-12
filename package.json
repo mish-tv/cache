@@ -1,5 +1,5 @@
 {
-  "name": "@mish/cache",
+  "name": "@mish-tv/cache",
   "version": "0.1.0",
   "description": "A simple cache library with support for exclusion control.",
   "main": "lib/cjs/index.js",

@@ -1,4 +1,4 @@
-<h1 align="center">@mish/cache</h1>
+<h1 align="center">@mish-tv/cache</h1>
 
 <div align="center">
 <a href="https://github.com/mish-tv/cache/actions/workflows/build-and-test.yml"><img src="https://github.com/mish-tv/cache/actions/workflows/build-and-test.yml/badge.svg" alt="Build and test"></a>
@@ -6,17 +6,17 @@
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/mish-tv/cache.svg?style=flat" alt="license"></a>
 </div>
 
-<h4 align="center">`@mish/cache` is a simple cache library that holds a single value in a single instance.</h4>
+<h4 align="center">`@mish-tv/cache` is a simple cache library that holds a single value in a single instance.</h4>
 
 
 ## Installation
 ```
-npm install --save @mish/cache
+npm install --save @mish-tv/cache
 ```
 
 ## Simple Usage
 ```typescript
-import { Cache } from "@mish/cache";
+import { Cache } from "@mish-tv/cache";
 
 // By default, it caches for 1hour + rand()*6min.
 const entityCache = new Cache<Entity>();
