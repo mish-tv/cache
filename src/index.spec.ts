@@ -61,7 +61,7 @@ describe("Cache", () => {
 
   context("If ttl is set", () => {
     beforeEach(() => {
-      cache = new Cache(100, 0);
+      cache = new Cache(90, 0);
     });
 
     it("should expire according to the configured ttl.", async () => {
