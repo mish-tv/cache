@@ -24,6 +24,7 @@ desktop.ini
 .DS_STORE
 
 # Node.js
+lib
 node_modules
 npm-debug.log
 yarn-error.log
