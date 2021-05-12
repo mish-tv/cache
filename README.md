@@ -1,5 +1,11 @@
-# @mish/cache
-`@mish/cache` is a simple cache library that holds a single value in a single instance.
+<h1 align="center">@mish/cache</h1>
+
+<div align="center">
+<a href="https://github.com/mish-tv/mish-app/actions/workflows/build-and-test.yml"><img src="https://github.com/mish-tv/cache/actions/workflows/build-and-test.yml/badge.svg" alt="GitHub Actions"></a>
+</div>
+
+<h4 align="center">`@mish/cache` is a simple cache library that holds a single value in a single instance.</h4>
+
 
 ## Installation
 ```
