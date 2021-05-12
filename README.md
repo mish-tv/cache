@@ -18,7 +18,7 @@ const entityCache = new Cache<Entity>();
 // caches the returned value.
 const getEntity = () =>
   entityCache.get(async () => {
-    const entity: Entity = // get entity;
+    const entity: Entity = fetchEntity();
 
     return entity;
   });
