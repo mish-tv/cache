@@ -28,7 +28,7 @@ const getEntity = () =>
 })();
 ```
 
-## Other usage
+## Other Usage
 ```typescript
 // You can configure ttl and jitter.
 const entityCache = new Cache(60000, 1000);
