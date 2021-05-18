@@ -97,3 +97,18 @@ describe("Cache.expiresAt", () => {
     }
   });
 });
+
+describe("Cache.invalidate", () => {
+  let cache: Cache<number>;
+
+  beforeEach(() => {
+    cache = new Cache<number>();
+  });
+
+  it("should invalidate the cache.", async () => {
+    expect(await cache.get(async () => 1)).toBe(1);
+    expect(await cache.get(async () => 2)).toBe(1);
+    cache.invalidate();
+    expect(await cache.get(async () => 3)).toBe(3);
+  });
+});

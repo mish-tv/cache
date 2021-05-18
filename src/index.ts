@@ -57,4 +57,8 @@ export class Cache<T> {
 
     return this.#promise;
   }
+
+  invalidate() {
+    this.#promise = undefined;
+  }
 }
