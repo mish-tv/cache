@@ -1,4 +1,8 @@
-const createExpiresAt = (ttl: number) => {
+type TTL = number | "infinity";
+type ExpiresAt = Date | "never";
+
+const createExpiresAt = (ttl: TTL): ExpiresAt => {
+  if (ttl === "infinity") return "never";
   const now = new Date();
   now.setMilliseconds(now.getMilliseconds() + ttl);
 
@@ -6,22 +10,33 @@ const createExpiresAt = (ttl: number) => {
 };
 
 export class Cache<T> {
-  #ttl: number;
-  #expiresAt: Date;
+  #ttl: TTL;
+  #expiresAt: ExpiresAt;
   #promise: Nullable<Promise<T>>;
 
   /**
-   * @param ttl The duration from when the value to be cached is retrieved until it expires.
+   * @param ttl The duration from when the value to be cached is retrieved until it expires. If "infinity" is specified, it will
+   * not expire.
    *
    * @param jitter The actual ttl of cache is the ttl passed in the argument plus a random value whose minimum value is 0 and
-   * maximum value is jitter. The default value is `ttl / 10`.
+   * maximum value is jitter. The default value is `ttl / 10`. If ttl is "inifinity", jitter is ignored.
+   * 
+   * @param initial The initial value of the cache can be specified.
    */
-  constructor(ttl = 3600000, jitter?: number) {
-    this.#ttl = ttl + Math.random() * (jitter ?? ttl / 10);
+  constructor(ttl: TTL = 3600000, jitter?: number, initial?: T) {
+    this.#ttl = (() => {
+      if (ttl === "infinity") return "infinity";
+      return ttl + Math.random() * (jitter ?? ttl / 10);
+    })();
     this.#expiresAt = createExpiresAt(this.#ttl);
+    this.#promise = (() => {
+      if (initial == undefined) return undefined;
+      return Promise.resolve(initial);
+    })();
   }
 
   get isExpired() {
+    if (this.expiresAt === "never") return false;
     return new Date() > this.expiresAt;
   }
 
