@@ -16,7 +16,7 @@ export class Cache<T> {
 
   /**
    * @param ttl The duration from when the value to be cached is retrieved until it expires. If "infinity" is specified, it will
-   * not expire.
+   * never expire.
    *
    * @param jitter The actual ttl of cache is the ttl passed in the argument plus a random value whose minimum value is 0 and
    * maximum value is jitter. The default value is `ttl / 10`. If ttl is "inifinity", jitter is ignored.

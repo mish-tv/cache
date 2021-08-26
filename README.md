@@ -39,6 +39,9 @@ const getEntity = () =>
 
 ## Other Usage
 ```typescript
-// You can configure ttl and jitter.
-const entityCache = new Cache(60000, 1000);
+// You can configure ttl, jitter and initial value.
+const entityCache = new Cache(60000, 1000, entity);
+
+// You can create a cache that will never expire.
+const entityCache = new Cache("infinity");
 ```

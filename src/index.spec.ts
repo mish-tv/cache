@@ -84,7 +84,7 @@ describe("Cache", () => {
 
   context("If ttl is infinity", () => {
     beforeEach(() => {
-      cache = new Cache("infinity", 0);
+      cache = new Cache("infinity");
     });
 
     it("should not expire.", async () => {
