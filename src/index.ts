@@ -20,23 +20,26 @@ export class Cache<T> {
    *
    * @param jitter The actual ttl of cache is the ttl passed in the argument plus a random value whose minimum value is 0 and
    * maximum value is jitter. The default value is `ttl / 10`. If ttl is "inifinity", jitter is ignored.
-   * 
+   *
    * @param initial The initial value of the cache can be specified.
    */
   constructor(ttl: TTL = 3600000, jitter?: number, initial?: T) {
     this.#ttl = (() => {
       if (ttl === "infinity") return "infinity";
+
       return ttl + Math.random() * (jitter ?? ttl / 10);
     })();
     this.#expiresAt = createExpiresAt(this.#ttl);
     this.#promise = (() => {
       if (initial == undefined) return undefined;
+
       return Promise.resolve(initial);
     })();
   }
 
   get isExpired() {
     if (this.expiresAt === "never") return false;
+
     return new Date() > this.expiresAt;
   }
 

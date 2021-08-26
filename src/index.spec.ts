@@ -85,19 +85,19 @@ describe("Cache", () => {
   context("If ttl is infinity", () => {
     beforeEach(() => {
       cache = new Cache("infinity", 0);
-    })
+    });
 
     it("should not expire.", async () => {
       expect(await cache.get(async () => 1)).toBe(1);
       await sleep(1000);
       expect(await cache.get(async () => 2)).toBe(1);
-    })
-  })
+    });
+  });
 
   context("If the initial value is set", () => {
     beforeEach(() => {
       cache = new Cache(90, 0, 1);
-    })
+    });
 
     it("should return the initial value until it expires.", async () => {
       expect(await cache.get(async () => 2)).toBe(1);
@@ -105,8 +105,8 @@ describe("Cache", () => {
       expect(await cache.get(async () => 3)).toBe(1);
       await sleep(50);
       expect(await cache.get(async () => 4)).toBe(4);
-    })
-  })
+    });
+  });
 });
 
 describe("Cache.expiresAt", () => {
@@ -114,7 +114,9 @@ describe("Cache.expiresAt", () => {
     const result = new Map<number, number>();
     for (let i = 0; i < 1000; i++) {
       const cache = new Cache(1000, 10000);
-      const sub = Math.floor(((cache.expiresAt as Date).getTime() - Date.now()) / 1000);
+      const sub = Math.floor(
+        ((cache.expiresAt as Date).getTime() - Date.now()) / 1000
+      );
       result.set(sub, (result.get(sub) ?? 0) + 1);
     }
     expect(result.size).toBe(10);
