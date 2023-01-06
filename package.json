@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "rm -rf ./lib",
     "build": "tsc -b ./tsconfig.build.json ./tsconfig.build-cjs.json",
-    "lint": "tsc --noEmit && eslint \"./src/**/*.ts\"",
+    "lint": "tsc --noEmit && eslint \"./src/**/*.ts\" && prettier --check \"./src/**/*.{ts,tsx}\"",
     "fix:ts": "eslint --fix \"./src/**/*.ts\"",
     "test": "jest"
   },

@@ -18,25 +18,25 @@ describe("Cache", () => {
 
   it("should cache the value returned by the initializer.", async () => {
     await expect(() =>
-      cache.get(async () => {
+      cache.get(() => {
         throw new Error("error1");
       })
     ).rejects.toThrowError();
 
-    expect(await cache.get(async () => 1)).toBe(1);
+    expect(await cache.get(() => Promise.resolve(1))).toBe(1);
     expect(
-      await cache.get(async () => {
+      await cache.get(() => {
         throw new Error("error1");
       })
     ).toBe(1);
-    expect(await cache.get(async () => 3)).toBe(1);
+    expect(await cache.get(() => Promise.resolve(3))).toBe(1);
   });
 
   it("runs in parallel and if it fails, reruns.", async () => {
     expect(
       await Promise.all([
         cache.get(() => sleepThrow(50, "error")).catch((e) => e.toString()),
-        cache.get(async () => 1),
+        cache.get(() => Promise.resolve(1)),
       ])
     ).toEqual(["Error: error", 1]);
   });
@@ -50,8 +50,8 @@ describe("Cache", () => {
       });
 
       it("should use the first initializer to cache the value.", async () => {
-        cache.get(initializer);
-        expect(await cache.get(async () => 2)).toBe(1);
+        await cache.get(initializer);
+        expect(await cache.get(() => Promise.resolve(2))).toBe(1);
       });
     });
 
@@ -63,7 +63,7 @@ describe("Cache", () => {
       it("should use a new initializer to cache the value.", async () => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         cache.get(initializer).catch(() => {});
-        expect(await cache.get(async () => 2)).toBe(2);
+        expect(await cache.get(() => Promise.resolve(2))).toBe(2);
       });
     });
   });
@@ -76,18 +76,18 @@ describe("Cache", () => {
     it("should expire according to the configured ttl.", async () => {
       expect(await cache.get(() => sleepGet(100, 1))).toBe(1);
       await sleep(50);
-      expect(await cache.get(async () => 2)).toBe(1);
+      expect(await cache.get(() => Promise.resolve(2))).toBe(1);
       await sleep(50);
-      expect(await cache.get(async () => 3)).toBe(3);
+      expect(await cache.get(() => Promise.resolve(3))).toBe(3);
       await sleep(50);
-      expect(await cache.get(async () => 4)).toBe(3);
+      expect(await cache.get(() => Promise.resolve(4))).toBe(3);
       await sleep(50);
       await expect(() =>
-        cache.get(async () => {
+        cache.get(() => {
           throw new Error("error1");
         })
       ).rejects.toThrowError("error1");
-      expect(await cache.get(async () => 5)).toBe(5);
+      expect(await cache.get(() => Promise.resolve(5))).toBe(5);
     });
 
     it("gets the value of the first execution if executed in parallel.", async () => {
@@ -98,7 +98,7 @@ describe("Cache", () => {
         ])
       ).toEqual([1, 1]);
       await sleep(50);
-      expect(await cache.get(async () => 2)).toBe(1);
+      expect(await cache.get(() => Promise.resolve(2))).toBe(1);
       await sleep(50);
       expect(
         await Promise.all([
@@ -106,7 +106,7 @@ describe("Cache", () => {
           cache.get(() => sleepGet(50, 4)),
         ])
       ).toEqual([3, 3]);
-      expect(await cache.get(async () => 2)).toBe(3);
+      expect(await cache.get(() => Promise.resolve(2))).toBe(3);
     });
   });
 
@@ -116,9 +116,9 @@ describe("Cache", () => {
     });
 
     it("should not expire.", async () => {
-      expect(await cache.get(async () => 1)).toBe(1);
+      expect(await cache.get(() => Promise.resolve(1))).toBe(1);
       await sleep(1000);
-      expect(await cache.get(async () => 2)).toBe(1);
+      expect(await cache.get(() => Promise.resolve(2))).toBe(1);
     });
   });
 
@@ -128,17 +128,17 @@ describe("Cache", () => {
     });
 
     it("should return the initial value until it expires.", async () => {
-      expect(await cache.get(async () => 2)).toBe(1);
+      expect(await cache.get(() => Promise.resolve(2))).toBe(1);
       await sleep(50);
-      expect(await cache.get(async () => 3)).toBe(1);
+      expect(await cache.get(() => Promise.resolve(3))).toBe(1);
       await sleep(50);
-      expect(await cache.get(async () => 4)).toBe(4);
+      expect(await cache.get(() => Promise.resolve(4))).toBe(4);
     });
   });
 });
 
 describe("Cache.expiresAt", () => {
-  it("should be set randomly by jitter.", async () => {
+  it("should be set randomly by jitter.", () => {
     const result = new Map<number, number>();
     for (let i = 0; i < 1000; i++) {
       const cache = new Cache(1000, 10000);
@@ -162,9 +162,9 @@ describe("Cache.invalidate", () => {
   });
 
   it("should invalidate the cache.", async () => {
-    expect(await cache.get(async () => 1)).toBe(1);
-    expect(await cache.get(async () => 2)).toBe(1);
+    expect(await cache.get(() => Promise.resolve(1))).toBe(1);
+    expect(await cache.get(() => Promise.resolve(2))).toBe(1);
     cache.invalidate();
-    expect(await cache.get(async () => 3)).toBe(3);
+    expect(await cache.get(() => Promise.resolve(3))).toBe(3);
   });
 });

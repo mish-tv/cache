@@ -1,15 +1,15 @@
 {
-
   // ---------------------------------------------------------------------------------------------------------------------------
   // editor
   // ---------------------------------------------------------------------------------------------------------------------------
   "editor.tabCompletion": "on",
   "editor.rulers": [128],
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
-  },
-
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": [
+    "source.fixAll.eslint",
+    "source.fixAll.stylelint"
+  ],
 
   // ---------------------------------------------------------------------------------------------------------------------------
   // files
@@ -31,19 +31,20 @@
   },
   "search.followSymlinks": true,
 
-
   // ---------------------------------------------------------------------------------------------------------------------------
   // extensions
   // ---------------------------------------------------------------------------------------------------------------------------
   "eslint.validate": [
     "javascript",
+    "javascriptreact",
     "typescript",
+    "typescriptreact"
   ],
-
+  "eslint.options": { "overrideConfigFile": ".eslintrc.vscode.jsonc" },
 
   // ---------------------------------------------------------------------------------------------------------------------------
   // languages
   // ---------------------------------------------------------------------------------------------------------------------------
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "typescript.suggest.autoImports": false,
+  "typescript.suggest.autoImports": false
 }
