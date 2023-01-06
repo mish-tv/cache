@@ -14,6 +14,8 @@ export class Cache<T> {
   #expiresAt: ExpiresAt;
   #promise: Nullable<Promise<T>>;
 
+  #isRunning = false;
+
   /**
    * @param ttl The duration from when the value to be cached is retrieved until it expires. If "infinity" is specified, it will
    * never expire.
@@ -55,13 +57,15 @@ export class Cache<T> {
    * resulting from the call to the initializer.
    */
   async get(initializer: () => Promise<T>) {
-    if (this.isExpired) this.#promise = undefined;
+    if (this.isExpired && !this.#isRunning) this.#promise = undefined;
     if (this.#promise != undefined) {
       try {
         return await this.#promise;
         // eslint-disable-next-line no-empty
       } catch {}
     }
+
+    this.#isRunning = true;
     this.#promise = initializer()
       .then((value) => {
         this.#expiresAt = createExpiresAt(this.#ttl);
@@ -71,6 +75,9 @@ export class Cache<T> {
       .catch((reason) => {
         this.#promise = undefined;
         throw reason;
+      })
+      .finally(() => {
+        this.#isRunning = false;
       });
 
     return this.#promise;

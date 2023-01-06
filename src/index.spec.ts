@@ -32,10 +32,19 @@ describe("Cache", () => {
     expect(await cache.get(async () => 3)).toBe(1);
   });
 
+  it("runs in parallel and if it fails, reruns.", async () => {
+    expect(
+      await Promise.all([
+        cache.get(() => sleepThrow(50, "error")).catch((e) => e.toString()),
+        cache.get(async () => 1),
+      ])
+    ).toEqual(["Error: error", 1]);
+  });
+
   context("If get is called again before it is completed", () => {
     let initializer: () => Promise<number>;
 
-    context("If the first initializer returns an value", () => {
+    context("If the first initializer returns an value.", () => {
       beforeEach(() => {
         initializer = () => sleepGet(100, 1);
       });
@@ -80,6 +89,25 @@ describe("Cache", () => {
       ).rejects.toThrowError("error1");
       expect(await cache.get(async () => 5)).toBe(5);
     });
+
+    it("gets the value of the first execution if executed in parallel.", async () => {
+      expect(
+        await Promise.all([
+          cache.get(() => sleepGet(50, 1)),
+          cache.get(() => sleepGet(50, 2)),
+        ])
+      ).toEqual([1, 1]);
+      await sleep(50);
+      expect(await cache.get(async () => 2)).toBe(1);
+      await sleep(50);
+      expect(
+        await Promise.all([
+          cache.get(() => sleepGet(50, 3)),
+          cache.get(() => sleepGet(50, 4)),
+        ])
+      ).toEqual([3, 3]);
+      expect(await cache.get(async () => 2)).toBe(3);
+    });
   });
 
   context("If ttl is infinity", () => {
@@ -110,7 +138,7 @@ describe("Cache", () => {
 });
 
 describe("Cache.expiresAt", () => {
-  it("should be set randomly by jitter", async () => {
+  it("should be set randomly by jitter.", async () => {
     const result = new Map<number, number>();
     for (let i = 0; i < 1000; i++) {
       const cache = new Cache(1000, 10000);
