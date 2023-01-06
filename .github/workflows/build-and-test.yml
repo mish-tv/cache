@@ -23,6 +23,4 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm test
-    - env:
-        CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
-      run: npm run codecov
+    - uses: codecov/codecov-action@v3
