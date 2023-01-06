@@ -1,4 +1,4 @@
-type TTL = number | "infinity";
+export type TTL = number | "infinity";
 type ExpiresAt = Date | "never";
 
 const createExpiresAt = (ttl: TTL): ExpiresAt => {
